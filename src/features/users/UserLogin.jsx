@@ -3,37 +3,65 @@ import { Button, Checkbox, Form, Input } from 'antd';
 
 import { login } from './UserSlice';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch} from 'react-redux';
+import { useDispatch} from 'react-redux';
 
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
 export default function UserLogin(){
-    const users=useSelector((state)=>{return state.users});
-    const dispatch = useDispatch();
 
+    const [incorrect,setIncorrect]=React.useState(false);
     const navigate=useNavigate();
+    const dispatch=useDispatch();
 
-    function onFinish(e){
-        users.register_users.forEach((item)=>{
-            if(item.user===e.username&&item.password===e.password){
-                dispatch(login(item));
-                navigate("../");
-
+    async function onFinish(e){
+        const code = await axios({
+            headers: {
+                "Content-Type": "application/json"
+            },
+            url: 'http://47.251.69.199/user/login',
+            method: "POST",
+            data: {
+                username: e.username,
+                password: e.password,
             }
         })
+
+        if(code.data.code===200){
+            dispatch(login(code.data))
+            navigate("../")
+            //console.log(code.data.data)
+
+        }
+        else{
+            setIncorrect(true);
+
+        }
+    }
+
+    function gotoGegister(){
+        navigate("../register")
+
     }
 
 
     function onFinishFailed(){
 
     }
+    const warnStyle={
+        color: "red"
+    }
 
+    const registerStyle={
+        backgroundColor: "rgba(47, 255, 47, 0.568)",
+        marginLeft: "20px"
+    }
     
-
-
     return  (
-        <div className='register'>
+        <div className='loginPage'>
+            <h2>Login</h2>
+            {incorrect &&<h4 style={warnStyle}>The username or password is incorrent</h4>}
             <Form
                 name="basic"
                 labelCol={{
@@ -96,11 +124,16 @@ export default function UserLogin(){
                 }}
                 >
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    Login
                 </Button>
+
+                <Button type="primary" htmlType="submit" style={registerStyle} onClick={gotoGegister}>
+                    Register
+                </Button>
+
                 </Form.Item>
             </Form>
-            <Link to="../register">Register New Account</Link>
+
         </div>
 );
 

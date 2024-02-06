@@ -1,27 +1,45 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-//const initialState=[];
 
 const initialState={
-    register_users: [],
-    loginin_user:{},
+    loginin_user: localStorage.getItem("token")||"",
+    user_info: {}
 }
 
 export const users=createSlice({
     name: "user",
     initialState,
     reducers: {
-        newUser(state, action){
-            state.register_users.push(action.payload);
-        },
         login(state, action){
-            state.loginin_user=action.payload;
+            state.loginin_user=action.payload.data;
+            localStorage.setItem("token",action.payload.data);
+
+        },
+        saveUserName(state,action){
+            state.user_info=action.payload;
+
+        },
+        logout(state, action){
+            state.loginin_user="";
+            state.user_info={};
+            localStorage.removeItem("token");
+
         }
-
+//
     },
-})
+});
 
-export const{newUser, login}=users.actions;
+
+export const{newUser, login, logout, saveUserName}=users.actions;
 
 export default users.reducer;
+
+
+
+
+
+
+
+
+

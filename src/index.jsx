@@ -11,16 +11,24 @@ import UserRegister from './features/users/UserRegister';
 import UserLogin from './features/users/UserLogin';
 import Header from './page/Header';
 
+import Page from "./page/Page"
+
+
+import Error from './page/Error';
+
 
 
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 
 const router=createBrowserRouter(createRoutesFromElements(
-  <Route path='/' element={<Header />}>
+  <Route path='/' element={<Header />} >
     <Route index element={<PostList />}/>
     <Route path="login" element={<UserLogin />} />
     <Route path='register' element={<UserRegister />}/>
+    <Route path='page' element={<Page />} errorElement={<Error />} >
+
+    </Route>
 
 
 

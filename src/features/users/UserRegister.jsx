@@ -1,49 +1,74 @@
-import { useSelector,useDispatch } from "react-redux";
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-
-import { newUser } from "./UserSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 export default function UserRegister(){
-    const users = useSelector((state)=> {return state.users.register_users});
 
-    let exist=false;
+    const [passwordRepeat,setPasswordRepeat]=React.useState(false);
+    const [accountAlreadyExisted, setAccountAlreadyExisted]=React.useState(false);
     const navigate=useNavigate();
 
-    const dispatch = useDispatch();
 
-    function onFinish(e){
+    async function onFinish(e){
         if(e.repeat_password===e.password){
 
-            exist=false;
-        
-            users.forEach((item)=>{
-                if(item.user===e.username){         
-                    exist=true;
+            const code = await axios({
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                url: 'http://47.251.69.199/user/register',
+                data: {
+                    username: e.username,
+                    password: e.password,
                 }
             })
-            if(!exist){
-                dispatch(newUser({
-                    user: e.username,
-                    password: e.password,
-                }))
 
-                navigate('../login');
+            if(code.data.code!==200){
+                setAccountAlreadyExisted(true);
+
             }
+            else{
+                navigate("../login")
+            }
+
         }
+        else{
+            setPasswordRepeat(true);
+        }
+    }
+
+
+    function login(){
+        navigate("../login")
+
     }
 
     function onFinishFailed(){
 
     }
 
+    const warnStyle={
+        color: "red"
+    }
 
+    const resetStyle={
+        backgroundColor: "salmon",
+        marginLeft: "20px"
+    }
+
+    const loginStyle={
+        backgroundColor: "rgba(47, 255, 47, 0.568)",
+        marginLeft: "20px"
+    }
 
     return(
-        <div className="register">
+        <div className="registerPage">
             <h2>Register A New Account</h2>
+            {accountAlreadyExisted &&<h3 style={warnStyle}>Username Already Exist</h3>}
+            {passwordRepeat && <h4 style={warnStyle}>The repeat password do not match with your password</h4>}
             <Form
             name="basic"
             labelCol={{
@@ -62,6 +87,7 @@ export default function UserRegister(){
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             >
+
             <Form.Item
                 label="Username"
                 name="username"
@@ -119,7 +145,10 @@ export default function UserRegister(){
                 }}
             >
                 <Button type="primary" htmlType="submit">
-                Submit
+                Register
+                </Button>
+                <Button type="primary" onClick={login} style={loginStyle}>
+                Log In
                 </Button>
             </Form.Item>
             </Form>

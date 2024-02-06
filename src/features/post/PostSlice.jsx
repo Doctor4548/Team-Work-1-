@@ -1,22 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = []
+const initialState = {
+    type: 0,
+    search: ""
+};
 
 export const post = createSlice({
     name: "posts",
     initialState,
     reducers:{
-        addPost(state, action){
-            state.push(action.payload);
+        setType(state,action){
+            state.type=action.payload;
         },
-        removePost(state,action){
-            return state.filter((element)=>{
-                return element.id!==action.payload.id
-            })
-        },
+        setSearch(state, action){
+            state.search=action.payload
+        }
     },
 })
 
 
-export const {addPost, removePost} = post.actions;
+export const {setType, setSearch} = post.actions;
 export default post.reducer;
