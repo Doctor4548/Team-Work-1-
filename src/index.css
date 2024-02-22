@@ -2,14 +2,34 @@
   box-sizing: border-box;
 }
 
+
 body {
   margin: 0;
 }
-button:hover{
+button:hover, .hover:hover{
   cursor: pointer;
 }
 
+.hover{
+  color:grey;
+  text-decoration: none;
+}
+
+.hover_clicked{
+  text-decoration: underline;
+  color:lightyellow;
+  font-weight: bold;
+  cursor:pointer;
+}
+
+
+
+.popular{
+  color:lightyellow;
+  font-weight: bold;
+}
 /*Header */
+
 
 .headerButtons{
   display: flex;
@@ -34,25 +54,49 @@ button:hover{
   width:300px
 }
 
+.headImg{
+  cursor: pointer;
+
+}
+
 .leftHeader{
-  margin-left: 10px;
   display:flex;
   width:30%;
-  margin: 10px;
+  
   justify-content: space-around;
   color:grey;
 }
 
-.popular{
-  color:lightyellow;
-  size:1.1em;
-  font-weight: bold;
+.middleHeader{
+  display:flex;
+  gap:10px;
+  margin-left: 30px;
 }
+
+
+.homeOnly-container{
+  width:100%;
+
+}
+
+.homeOnly{  
+  display:flex;
+  justify-content: center;
+  width:100%;
+  color:lightyellow;
+  font-size:1.5em;
+  
+  font-weight: bold;
+  justify-self: left;
+
+}
+
+
 
 .rightHeader{
   display:flex;
   margin-right: 20px;
-  gap:10px;
+  gap:8px;
 }
 
 .rightHeader>button{
@@ -98,6 +142,10 @@ button:hover{
   width: 500px;
 }
 
+.loginText{
+  margin-right: 20px;
+}
+
 
 /*Register page*/
 
@@ -113,7 +161,17 @@ button:hover{
   width:500px;
 }
 
+.registerText{
+
+}
 /* articles page*/
+
+
+
+.postStyle:hover{
+  background-color: aqua;
+}
+
 
 .articles{
   display:flex;
@@ -148,6 +206,9 @@ button:hover{
 
 .articleTitle{
   font-size: 1.05em;
+  overflow-y:hidden;
+  margin-bottom: 0;
+  margin-top: 5px;
 }
 
 .articleButtons{
@@ -159,6 +220,7 @@ button:hover{
   color:lightgray;
   border-radius: 3px;
   width:50px;
+  min-height: 35px;
 }
 
 .viewButton{
@@ -196,10 +258,25 @@ button:hover{
 .drawer{
   width:700px
 }
+
 .drawerContent{
+  position: relative;
   display: flex;
   flex-direction: column;
   gap:50px;
+  margin-top: 30px;
+}
+
+.drawerWarning{
+  position: absolute;
+  left:35%;
+  top: -10%;
+}
+
+.drawerWarning2{
+  position: absolute;
+  left:18%;
+  top: -10%;
 }
 
 .drawerContent>*{
@@ -225,4 +302,123 @@ button:hover{
 }
 
 
+/*Article Page*/
+.newsPage{
+  display:flex;
+  flex-direction: column;
+
+  align-items: center;
+  margin-top: 50px;
+
+}
+
+.newsTitle{
+  width:80%;
+  display:block;
+  text-align: center;
+  font-size: 3.5em;
+  font-weight: bold;
+}
+
+.newsAuthor{
+  cursor: pointer;
+  display:flex;
+  width:80%;
+  justify-content: right;
+  margin: 10px;
+  margin-top: 80px;
+  font-size: 1.3em;
+  opacity:0.8;
+}
+
+.newsType{
+  display:flex;
+  width:80%;
+  justify-content: left;
+  font-size: 1.3em;
+  font-weight: bold;
+  margin: 10px;
+
+}
+
+.newsContent{
+  width:60%;
+  font-size: 1.3em;
+  line-height: 2;
+  text-indent: 25px;
+  text-align: justify;
+}
+
+.gotoTop{
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+
+  width: 50px;
+  height: 75px;
+  background-color: white;
+  color: #333;
+  font-size: 18px;
+  text-align: center;
+  line-height: 100px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.2s ease-out;
+  font-size: 1.5em;
+}
+
+.gotoTop::before{
+
+  font-family: 'icomoon';
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.gotoTop:hover{
+  background-color: skyblue;
+}
+
+
+.leftSide{
+  position: absolute;
+  top:10%;
+  left:3%;
+  z-index: -1;
+  color:lightgray
+}
+
+.rightSide{
+  position: absolute;
+  top:10%;
+  right:3%;
+  z-index: -1;
+  color:lightgray
+}
+
+.drawer_content_container{
+
+}
+
+.drawer_content{
+  width:  100%;
+  height: 100%
+}
+
+
+.drawer-textarea{
+  position: relative;
+}
+
+
+.displayLength{
+  position: absolute;
+  right:1%;
+  bottom: -6%;
+}
+
+.displayLength_title{
+  position: absolute;
+  right:1%;
+  bottom: -70%;
+}
 

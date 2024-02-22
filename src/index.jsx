@@ -13,6 +13,8 @@ import Header from './page/Header';
 
 import Page from "./page/Page"
 
+import ArticlePage from './features/post/ArticlePage';
+import UserPosts from './features/post/UserPosts';
 
 import Error from './page/Error';
 
@@ -26,7 +28,13 @@ const router=createBrowserRouter(createRoutesFromElements(
     <Route index element={<PostList />}/>
     <Route path="login" element={<UserLogin />} />
     <Route path='register' element={<UserRegister />}/>
+    
+    <Route path='userPage' element={<Page />} errorElement={<Error />}>
+      <Route path=':username' element={<UserPosts />}/> 
+    </Route>
+
     <Route path='page' element={<Page />} errorElement={<Error />} >
+      <Route path=':id' element={<ArticlePage />}/>
 
     </Route>
 

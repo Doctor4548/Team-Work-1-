@@ -1,9 +1,8 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { login } from './UserSlice';
-import { Link } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +13,16 @@ export default function UserLogin(){
     const [incorrect,setIncorrect]=React.useState(false);
     const navigate=useNavigate();
     const dispatch=useDispatch();
+
+    const token=useSelector((state)=>{return state.users.loginin_user});
+
+    React.useEffect(()=>{
+        
+        if(token.length>0){
+            navigate("../");
+        }
+
+    },[token])
 
     async function onFinish(e){
         const code = await axios({
@@ -55,14 +64,11 @@ export default function UserLogin(){
 
     const registerStyle={
         backgroundColor: "rgba(47, 255, 47, 0.568)",
-        marginLeft: "20px"
+        margin: "20px"
     }
-    
-    return  (
-        <div className='loginPage'>
-            <h2>Login</h2>
-            {incorrect &&<h4 style={warnStyle}>The username or password is incorrent</h4>}
-            <Form
+
+    /*
+                <Form
                 name="basic"
                 labelCol={{
                 span: 8,
@@ -128,11 +134,71 @@ export default function UserLogin(){
                 </Button>
 
                 <Button type="primary" htmlType="submit" style={registerStyle} onClick={gotoGegister}>
-                    Register
+                    Goto Register
                 </Button>
 
                 </Form.Item>
             </Form>
+    
+    */
+    
+    return  (
+        <div className='loginPage'>
+            <h2 className='loginText'>Login</h2>
+            {incorrect &&<h4 style={warnStyle}>The username or password is incorrent</h4>}
+            <Form
+                name="normal_login"
+                className="login-form"
+                initialValues={{
+                    remember: true,
+                }}
+                onFinish={onFinish}
+                >
+                <Form.Item
+                    name="username"
+                    rules={[
+                    {
+                        required: true,
+                        message: 'Please input your Username!',
+                    },
+                    ]}
+                >
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[
+                    {
+                        required: true,
+                        message: 'Please input your Password!',
+                    },
+                    ]}
+                >
+                    <Input
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Password"
+                    />
+                </Form.Item>
+                <Form.Item>
+                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                    <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+
+                    {/*<a className="login-form-forgot" href="">
+                    Forgot password
+                    </a>*/}
+                </Form.Item>
+
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                    Log in
+                    </Button>
+                    Or <a onClick={gotoGegister}>register now!</a>
+                </Form.Item>
+            </Form>
+
+
 
         </div>
 );

@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     type: 0,
-    search: ""
+    search: "",
+    author: 0,
+    total: 0,
 };
 
 export const post = createSlice({
@@ -13,11 +15,17 @@ export const post = createSlice({
             state.type=action.payload;
         },
         setSearch(state, action){
-            state.search=action.payload
-        }
+            state.search=action.payload;
+        },
+        selectAuthor(state, action){
+            state.author=action.payload;
+        },
+        totalArticles(state, action){
+            state.total=action.payload;
+        },
     },
 })
 
 
-export const {setType, setSearch} = post.actions;
+export const {setType, setSearch, selectAuthor, totalArticles} = post.actions;
 export default post.reducer;
